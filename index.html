@@ -1,122 +1,101 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#f4000b">
-    <title>LibreTime Radio - Live Streaming</title>
-    <meta name="description" content="Reproductor de radio en vivo conectado a LibreTime + Icecast." />
-    <meta name="keywords" content="LibreTime, Icecast, Radio streaming" /> 
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" /> 
-    <meta name="robots" content="index, follow"> 
-    <meta name="googlebot" content="index, follow">
-    <meta property="og:image" content=""> 
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512"> 
-    <link rel="icon" type="image/png" href="favicon.ico" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <script src="https://warningfm.github.io/v3/player/js/jquery-3.2.1.min.js"></script>
-    <script src="https://warningfm.github.io/v3/player/js/lunaradio.min.js"></script>
-    <style>
-     html,body{font-family:"Open Sans",sans-serif;height:100%;margin:0;display:flex;flex-direction:column;color:#272829}a{text-decoration:none;color:rgba(255,255,255,1)}a:hover{color:rgba(255,255,255,1);text-decoration:none}#header{position:fixed;top:0;left:0;z-index:100;transition:all .5s;overflow-y:auto;background:rgba(255,255,255,0);padding:20px 20px 0}.nav-menu *{margin:0;padding:0;list-style:none}.nav-menu > ul > li{position:relative;white-space:nowrap}.nav-menu a{display:flex;align-items:center;color:red;padding-left:18px;margin-bottom:8px;transition:.3s;font-size:15px;border-radius:50px;background:#f2f3f5;height:46px;width:100%;overflow:hidden;transition:.3s}.nav-menu a i{font-size:16px}.nav-menu a span{padding:0 5px 0 7px;color:#000}.nav-menu li:hover > a{color:blue;background:#00cc45}.nav-menu li:hover > a span{color:#fff}.mobile-nav-toggle{position:fixed;right:15px;top:15px;z-index:99;border:0;background:none;font-size:24px;transition:all .4s;outline:none!important;line-height:1;cursor:pointer;text-align:right}.mobile-nav-toggle i{color:#fff}.mobile-nav-active{overflow:hidden}.mobile-nav-active #header{left:0}.mobile-nav-active .mobile-nav-toggle i{color:#fff}#player{margin:0 auto;width:100%;height:100%}.background_hora{width:196px;height:46px;background-color:#fff;position:absolute;right:20px;top:18px;border-radius:50px}#relogio{margin:0;position:absolute;top:50%;left:50%;margin-right:-50%;transform:translate(-50%,-50%);font-size:30px;font-family:"Poppins",sans-serif;color:red}.back-to-top{position:fixed;display:none;width:40px;height:40px;border-radius:50px;right:15px;bottom:15px;background:#3a0d5c;color:#fff;transition:display .5s ease-in-out;z-index:99999}.back-to-top i{font-size:24px;position:absolute;top:7px;left:8px}.back-to-top:hover{color:#fff;background:#0678e3;transition:background .2s ease-in-out}@media (min-width: 992px){.mobile-nav-toggle{display:none}}@media (max-width: 991px){#header{width:auto;background:#fff;border-right:1px solid #e6e9ec;left:-300px;padding:20px 30px 100vh 10px}}@media only screen and (max-width: 768px){#player{width:100%;height:100%}.background_hora{display:none}#relogio{display:none}}
-   </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>KUS Medios Radio - En Vivo</title>
+
+<meta name="description" content="Radio en vivo desde LibreTime + Icecast">
+<meta name="theme-color" content="#0b1020">
+
+<link rel="icon" href="favicon.ico">
+
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src="https://warningfm.github.io/v3/player/js/jquery-3.2.1.min.js"></script>
+<script src="https://warningfm.github.io/v3/player/js/lunaradio.min.js"></script>
+
+<style>
+html,body{
+margin:0;
+height:100%;
+background:#07090e;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+#player{
+width:100%;
+height:100%;
+}
+
+.menu{
+position:fixed;
+top:15px;
+left:15px;
+z-index:999;
+}
+
+.menu a{
+display:block;
+background:#fff;
+padding:10px 15px;
+border-radius:30px;
+margin-bottom:6px;
+color:#000;
+text-decoration:none;
+}
+
+.menu a:hover{
+background:#00cc45;
+color:#fff;
+}
+</style>
 </head>
 
 <body>
-<div style="width:100%;height:100%;background: radial-gradient(circle at top, #1d2430, #07090e 70%) no-repeat;">
 
 <div id="player"></div>
-<script type="text/javascript">
-	   $("#player").lunaradio({
-			token: "",
-			userinterface: "big", 
-			backgroundcolor: "rgba(9,15,25,0.5)",
-			fontcolor: "#ffffff",
-			hightlightcolor: "#ef7f1a", 
-			fontname: "ZCOOL XiaoWei", 
-			googlefont: "ZCOOL+XiaoWei", 
-			fontratio: "0.4", 
-			radioname: "LibreTime Radio", 
-			scroll: "true", 
-			coverimage: "",
-			coverstyle: "square",
-			usevisualizer: "real", 
-			visualizertype: "8",
-			multicolorvisualizer: "true",
-			visualizeropacity: "1.0",
-			itunestoken: "1000lIPN", 
-			metadatatechnic: "ownmetadataurl", 
-			ownmetadataurl: "http://209.182.217.136:8000/status-json.xsl", 
-			corsproxy: "",
-			usestreamcorsproxy: "false",
-			streamurl: "http://209.182.217.136:8000/main", 
-			streamtype: "other", 
-			icecastmountpoint: "/main",
-			radionomyid: "", 
-			radionomyapikey: "",
-			radiojarid: "",
-			radiozenoid: "",
-			radiocoid: "",
-			shoutcastpath: "",
-			shoutcastid: "1", 
-			streamsuffix: "", 
-			metadatainterval: "10000", 
-			displayliveicon: "false", 
-			displayvisualizericon: "false", 
-			visualizeropacity: "1.0", 
-			color1: "#00FF00",
-            color2: "#ffff00",
-            color3: "#FF1F6F",
-            color4: "#FF1F6F",
-			volume: "100",
-			debug: "false",
-			autoplay: "true"
-		});
-       </script>
 
-<button type="button" class="mobile-nav-toggle"><i class="fas fa-bars"></i></button>
-<header id="header">
-<nav class="nav-menu">
-<ul>
-<li><a target="_blank" href="https://play.google.com/store/apps/details?id=com.oktamedia.radiokarimata"><i class="fab fa-google-play"></i> <span>Streaming APP</span></a></li>
-<li><a target="_blank" href="https://api.whatsapp.com/send?phone=82819347130006&text=Halo Bintang Tenggara"><i class="fas fa-bullhorn"></i><span>Publicidad</span></a></li>
-<li><a target="_blank" href="https://www.facebook.com/K123FM"><i class="fab fa-facebook-square" alt="Facebook"></i>
-<span>Facebook</span></a></li>
-<li><a target="_blank" href="https://www.instagram.com/ig_radiokarimata"><i class="fab fa-instagram-square" alt="Instagram"></i>
-<span>Instagram</span></a></li>
-<li><a href="https://api.whatsapp.com/send?phone=6282319305000&text=Halo Bintang Tenggara" target="_blank"><i class="fab fa-whatsapp-square" alt="Whatsapp"></i>
-<span>Whatsapp</span></a></li>
-<li><a target="_blank" href="https://www.tiktok.com/"><i class="fab fa-tiktok"></i><span>tiktok</span></a></li>
-</ul>
-</nav>
-</header>
-
-<div class="background_hora"><div id="relogio">00:00:00</div></div>
-<script>
-function reloj() {
-let elementoID = document.getElementById('relogio');
-let horalocal = new Date().toLocaleTimeString('id');
-elementoID.innerHTML = horalocal;
-}
-setInterval(reloj, 1000);
-</script>
+<div class="menu">
+<a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+<a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+<a href="#"><i class="fab fa-whatsapp"></i> Whatsapp</a>
 </div>
 
-<footer style="display:grid;align-content:end">
-<div style="background-color:#222;color:#fff;font-family:Orbitron;text-align:center;padding:15px"> 
-&copy; Copyright 2024 - <a href="https://streaming.karimatafm.net">Karimata FM</a> 
-</div>
-</footer>
-
 <script>
-$(".mobile-nav-toggle").click(function(){
-$("body").toggleClass("mobile-nav-active");
-$(".mobile-nav-toggle i").toggleClass("fa-bars fa-times");
+$("#player").lunaradio({
+
+    userinterface: "big",
+
+    radioname: "KUS Medios Radio",
+
+    backgroundcolor: "#07090e",
+    fontcolor: "#ffffff",
+    hightlightcolor: "#ff6600",
+
+    volume: "90",
+    autoplay: "false",
+
+    streamurl: "https://libretime.kusmedios.lat/stream/main",
+    streamtype: "icecast",
+    icecastmountpoint: "/main",
+
+    metadatatechnic: "ownmetadataurl",
+    ownmetadataurl: "https://libretime.kusmedios.lat/stream/status-json.xsl",
+
+    displayliveicon: "true",
+
+    usevisualizer: "real",
+    visualizertype: "8",
+
+    multicolorvisualizer: "true",
+
+    debug: "false"
+
 });
 </script>
+
 </body>
 </html>
