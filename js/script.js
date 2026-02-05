@@ -1,13 +1,13 @@
-const RADIO_NAME = 'mbah nunung Online Radio 1';
+const RADIO_NAME = 'LibreTime Radio';
 
 // SELECT ARTWORK PROVIDER, ITUNES, DEEZER & SPOTIFY  eg : spotify 
 var API_SERVICE = 'spotify';
 
 // Change Stream URL Here, Supports, ICECAST, ZENO, SHOUTCAST, RADIOJAR and any other stream service.
-const URL_STREAMING = "https://stream.zeno.fm/a19s7heytusuv";
+const URL_STREAMING = 'http://209.182.217.136:8000/main';
 
 //API URL 
-const API_URL = 'https://twj.es/radio_info/?radio_url=' + encodeURIComponent(URL_STREAMING);
+const API_URL = 'http://209.182.217.136:8000/status-json.xsl';
 
 // Visit https://api.vagalume.com.br/docs/ to get your API key
 const API_KEY = "18fe07917957c289983464588aabddfb";
@@ -332,43 +332,51 @@ function mute() {
 function getStreamingData() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
+        if (this.readyState !== 4 || this.status !== 200) {
+            return;
+        }
 
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.response.length === 0) {
+            console.log('%cdebug', 'font-size: 22px');
+            return;
+        }
 
-            if(this.response.length === 0) {
-                console.log('%cdebug', 'font-size: 22px')
-            }
+        var data = JSON.parse(this.responseText);
+        var source = data.icestats && data.icestats.source ? data.icestats.source : null;
 
-            var data = JSON.parse(this.responseText);
+        if (!source) {
+            return;
+        }
 
-            var page = new Page();
+        var sourceInfo = Array.isArray(source)
+            ? source.find(function (item) { return item.listenurl && item.listenurl.indexOf('/main') !== -1; }) || source[0]
+            : source;
 
-            // Formating characters to UTF-8
-            let song = data.currentSong.replace(/&apos;/g, '\'');
-            currentSong = song.replace(/&amp;/g, '&');
+        var rawTitle = sourceInfo.title || sourceInfo.server_name || RADIO_NAME;
+        var songParts = rawTitle.split(' - ');
+        var parsedArtist = songParts.length > 1 ? songParts.shift() : 'En vivo';
+        var parsedSong = songParts.length > 0 ? songParts.join(' - ') : rawTitle;
 
-            let artist = data.currentArtist.replace(/&apos;/g, '\'');
-            currentArtist = artist.replace(/&amp;/g, '&');
+        // Formating characters to UTF-8
+        var song = parsedSong.replace(/&apos;/g, "'");
+        var currentSong = song.replace(/&amp;/g, '&');
 
-            // Change the title
-            document.title = currentSong + ' - ' + currentArtist + ' | ' + RADIO_NAME;
+        var artist = parsedArtist.replace(/&apos;/g, "'");
+        var currentArtist = artist.replace(/&amp;/g, '&');
 
-            if (document.getElementById('currentSong').innerHTML !== song) {
-                page.refreshCover(currentSong, currentArtist);
-                page.refreshCurrentSong(currentSong, currentArtist);
-                page.refreshLyric(currentSong, currentArtist);
+        var page = new Page();
 
-                for (var i = 0; i < 2; i++) {
-                    page.refreshHistoric(data.songHistory[i], i);
-                }
-            }
-        } 
+        // Change the title
+        document.title = currentSong + ' - ' + currentArtist + ' | ' + RADIO_NAME;
+
+        if (document.getElementById('currentSong').innerHTML !== currentSong) {
+            page.refreshCover(currentSong, currentArtist);
+            page.refreshCurrentSong(currentSong, currentArtist);
+            page.refreshLyric(currentSong, currentArtist);
+        }
     };
 
-    var d = new Date();
-
-    // Requisition with timestamp to prevent cache on mobile devices
-    xhttp.open('GET', API_URL);
+    xhttp.open('GET', API_URL, true);
     xhttp.send();
 }
 
